@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./common.css" />
+    <title>HomePage</title>
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <div id="no_user"></div>
+    <h1>Food App 1</h1>
+    <div id="container"></div>
+  </body>
+</html>
+
+<script type="module">
+  import navbar from "./scripts/navbar.js";
+  document.getElementById("navbar").innerHTML = navbar();
+  let user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
+  if (user !== undefined) {
+    document.getElementById("login").innerText = user.name;
+  }
+  //   else if (user === null) {
+  //     document.getElementById("no_user").innerHTML = (
+  //       <h1>Please Login to continue</h1>
+  //     );
+  //   }
+  import { showData, showData2 } from "./scripts/main.js";
+
+  let btn = document.getElementById("search");
+
+  let id;
+  const debounce = (func, delay) => {
+    return function (...args) {
+      if (id) {
+        clearTimeout(id);
+      }
+      id = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+  btn.addEventListener(
+    "input",
+    debounce((e) => {
+      async function show() {
+        let input = document.querySelector("input").value;
+
+        let data = await showData(input);
+        append(data.meals);
+      }
+      show();
+    }, 1000)
+  );
+  let container = document.getElementById("container") || [];
+  let append = (data) => {
+    container.innerHTML = null;
+    data.forEach(function (el, i) {
+      let anchor = document.createElement("a");
+      anchor.href = "foodPage.html";
+      anchor.addEventListener("click", function () {
+        localStorage.setItem("food", JSON.stringify(el));
+      });
+      let div = document.createElement("div");
+      let img = document.createElement("img");
+      img.setAttribute("class", "foodImg");
+      let name = document.createElement("h3");
+      name.innerText = el.strMeal;
+      img.src = el.strMealThumb;
+      div.append(img, name);
+      anchor.append(div);
+      container.append(anchor);
+    });
+  };
+</script>
+<script></script>
+
+<!-- <script src="./scripts/login.js"></script> -->

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./common.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="navbar">
+
+    </div>
+    <h1>SignUp</h1>
+    <form >
+        <input type="text" required placeholder="Enter Name" name="" id="name">
+        <input type="email" required placeholder="Enter E-Mail" name="" id="email">
+        <input type="number" required placeholder="Enter Mobile No." name="" id="mobile">
+        <input type="password" required placeholder="Type Password" name="" id="password">
+        <input type="submit" required name="" id="submit">
+    </form>
+</body>
+</html>
+<script type="module">
+    import navbar from "./scripts/navbar.js" ;
+    document.getElementById("navbar").innerHTML = navbar() ; 
+</script>
+<script>
+
+    let form = document.querySelector("form") ;
+    let data = JSON.parse(localStorage.getItem("userDetails"))||[] ;
+    form.addEventListener("submit",function(e){
+         
+        e.preventDefault() ; 
+        let obj = {
+            name:form.name.value ,
+            email:form.email.value , 
+            mobile:form.mobile.value , 
+            password:form.password.value , 
+        }
+        console.log(obj)
+        data.push(obj)
+        localStorage.setItem("userDetails",JSON.stringify(data)) ; 
+       window.location.href = "login.html" ; 
+
+    })
+
+
+
+</script>

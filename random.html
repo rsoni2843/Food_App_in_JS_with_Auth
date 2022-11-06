@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./common.css">
+    <title>Document</title>
+    <style>
+        #container{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+    <h1>Random Page</h1>
+    <div id="container"></div>
+</body>
+</html>
+<script type="module">
+
+    import navbar from "./scripts/commonNavbar.js" ; 
+
+    document.getElementById("navbar").innerHTML = navbar() ; 
+
+    import {showData,showData2} from "./scripts/main.js" ; 
+    // console.log(showData2()) ; 
+
+    async function append(){
+        let data = await showData2() ; 
+        // console.log(data) ; 
+        showAppend(data.meals[0]) ; 
+
+    }
+    append()
+    let showAppend = (data) =>{
+        console.log(data) ; 
+
+        let anchor = document.createElement("a") ; 
+    anchor.href = "foodPage.html"  ;
+    anchor.addEventListener("click",function(){
+        localStorage.setItem("food",JSON.stringify(data))
+    })
+    let div = document.createElement("div") ; 
+    let img = document.createElement("img") ; 
+    img.setAttribute("class","foodImg")
+    let name = document.createElement("h3") ; 
+    name.innerText = data.strMeal ; 
+    img.src = data.strMealThumb ; 
+    div.append(img,name) ;
+    anchor.append(div)
+    container.append(anchor)  ; 
+
+
+
+    }
+
+
+
+    // import showData from "./scripts/random&recipe.js" ;  
+    // showData(`http://www.themealdb.com/api/json/v1/1/random.php`) ; 
+   
+
+
+</script>
+<!-- <script src="./scripts/random&recipe.js"></script> -->
